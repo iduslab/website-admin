@@ -8,9 +8,12 @@ import 'rsuite/dist/styles/rsuite-default.css'
 
 import App from './components/App'
 import Home from './pages/Home'
+import SignIn from './pages/SignIn'
+import * as Dashboard from './pages/dashboard'
 
 import { Provider } from 'react-redux'
 import { store } from './store'
+import { authGuard } from './components/AuthGuard'
 
 ReactDOM.render(
   <React.StrictMode>
@@ -18,6 +21,8 @@ ReactDOM.render(
       <BrowserRouter>
         <App>
           <Route exact path='/' component={Home} />
+          <Route exact path='/signin' component={SignIn} />
+          <Route path='/dashboard' component={authGuard(Dashboard.Home)} />
         </App>
       </BrowserRouter>
     </Provider>

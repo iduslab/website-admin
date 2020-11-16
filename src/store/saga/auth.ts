@@ -9,7 +9,8 @@ import {
   SIGNINCODE_FAILED,
   SIGNINCODE_SUCCESS,
   SIGNIN_SUCCESS,
-  SIGNIN_FAILED
+  SIGNIN_FAILED,
+  SIGNOUT
 } from '../action/auth'
 
 function* SigninCode({ payload }: ReturnType<typeof signinCodeAction.request>) {
@@ -19,7 +20,14 @@ function* SigninCode({ payload }: ReturnType<typeof signinCodeAction.request>) {
     yield put({
       type: SIGNINCODE_SUCCESS,
       payload: {
-        accesToken: access_token,
+        accessToken: access_token,
+        refreshToken: refresh_token
+      }
+    })
+    yield put({
+      type: SIGNIN_REQUEST,
+      payload: {
+        accessToken: access_token,
         refreshToken: refresh_token
       }
     })
@@ -38,10 +46,12 @@ function* Signin({ payload }: ReturnType<typeof signinAction.request>) {
       payload.refreshToken
     )
     const { access_token, refresh_token, is_admin } = res.data
+    localStorage.setItem('access_token', access_token)
+    localStorage.setItem('refresh_token', refresh_token)
     yield put({
       type: SIGNIN_SUCCESS,
       payload: {
-        accesToken: access_token,
+        accessToken: access_token,
         refreshToken: refresh_token,
         isAdmin: is_admin
       }
@@ -53,8 +63,14 @@ function* Signin({ payload }: ReturnType<typeof signinAction.request>) {
     })
   }
 }
+function* SignOut() {
+  console.log('called')
+  localStorage.removeItem('access_token')
+  localStorage.removeItem('refresh_token')
+}
 
 export default function* sagas() {
   yield takeLatest(SIGNINCODE_REQUEST, SigninCode)
   yield takeLatest(SIGNIN_REQUEST, Signin)
+  yield takeLatest(SIGNOUT, SignOut)
 }

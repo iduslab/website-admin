@@ -1,12 +1,12 @@
 import { act } from 'react-dom/test-utils'
 import { ErrorMessage } from 'rsuite'
 import { createReducer } from 'typesafe-actions'
-// import { ICafeteria } from 'src/apis/info'
 import {
   actions,
   Actions,
   signinAction,
-  signinCodeAction
+  signinCodeAction,
+  signoutAction
 } from '../action/auth'
 
 type State = {
@@ -15,6 +15,7 @@ type State = {
   refreshToken: string
   isAdmin: boolean
   errorMessage: string
+  isAuth: boolean
 }
 
 const InitialState: State = {
@@ -22,10 +23,11 @@ const InitialState: State = {
   accessToken: '',
   refreshToken: '',
   isAdmin: false,
-  errorMessage: ''
+  errorMessage: '',
+  isAuth: false
 }
 
-export const InfoReducers = createReducer<State, Actions>(InitialState)
+export const AuthReducers = createReducer<State, Actions>(InitialState)
   .handleAction(signinCodeAction.success, (state, { payload }) => ({
     ...state,
     accessToken: payload.accessToken,
@@ -45,7 +47,8 @@ export const InfoReducers = createReducer<State, Actions>(InitialState)
     accessToken: payload.accessToken,
     refreshToken: payload.refreshToken,
     isAdmin: payload.isAdmin,
-    errorMessage: ''
+    errorMessage: '',
+    isAuth: true
   }))
   .handleAction(signinAction.failure, (state, { payload }) => ({
     ...state,
@@ -55,4 +58,7 @@ export const InfoReducers = createReducer<State, Actions>(InitialState)
     ...state,
     accessToken: payload.accessToken,
     refreshToken: payload.refreshToken
+  }))
+  .handleAction(signoutAction, (state, action) => ({
+    ...InitialState
   }))

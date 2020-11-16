@@ -1,8 +1,12 @@
-import React, { FC } from 'react'
+import React, { FC, useEffect } from 'react'
 import { GetOAuthLink } from '../apis/auth'
-import { Notification } from 'rsuite'
+import { Button, Icon, Notification } from 'rsuite'
+import { useAuth } from '../hooks/auth'
+import { useHistory } from 'react-router-dom'
 
 const Home: FC = () => {
+  const auth = useAuth()
+  const history = useHistory()
   const SignIn = async () => {
     try {
       const {
@@ -17,9 +21,17 @@ const Home: FC = () => {
     }
   }
 
+  useEffect(() => {
+    if (auth.authState.isAuth) {
+      history.push('/dashboard')
+    }
+  }, [auth.authState.isAuth])
+
   return (
-    <div>
-      <div onClick={SignIn}>디스코드로 로그인하기</div>
+    <div className='centerAll'>
+      <Button color='blue' onClick={SignIn}>
+        <Icon icon='comment-o' size='lg' /> 디스코드로 로그인하기
+      </Button>
     </div>
   )
 }

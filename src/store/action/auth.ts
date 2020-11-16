@@ -1,4 +1,4 @@
-import { createAsyncAction, ActionType } from 'typesafe-actions'
+import { createAsyncAction, ActionType, createAction } from 'typesafe-actions'
 
 export const SIGNINCODE_REQUEST = 'auth/signincode/request'
 export const SIGNINCODE_SUCCESS = 'auth/signincode/success'
@@ -44,11 +44,16 @@ export const signinAction = createAsyncAction(
   SIGNIN_FAILED
 )<ISigninRequest, ISigninResponse, ISigninError>()
 
+export const SIGNOUT = 'auth/signout'
+
+export interface ISignout {}
+
+export const signoutAction = createAction(SIGNOUT)<ISignout>()
+
 export const actions = {
   signinCodeAction,
-  signinAction
+  signinAction,
+  signoutAction
 }
 
 export type Actions = ActionType<typeof actions>
-
-export default () => {}
