@@ -9,13 +9,18 @@ import 'rsuite/dist/styles/rsuite-default.css'
 import App from './components/App'
 import Home from './pages/Home'
 
+import { Provider } from 'react-redux'
+import { store } from './store'
+
 ReactDOM.render(
   <React.StrictMode>
-    <BrowserRouter>
-      <App>
-        <Route exact path='/' component={Home} />
-      </App>
-    </BrowserRouter>
+    <Provider store={store}>
+      <BrowserRouter>
+        <App>
+          <Route exact path='/' component={Home} />
+        </App>
+      </BrowserRouter>
+    </Provider>
   </React.StrictMode>,
   document.getElementById('root')
 )
