@@ -23,7 +23,7 @@ const Home: FC = () => {
 
   useEffect(() => {
     if (auth.authState.isAuth) {
-      history.push('/dashboard')
+      history.push('/dashboard/home')
     }
   }, [auth.authState.isAuth])
 

@@ -22,7 +22,15 @@ ReactDOM.render(
         <App>
           <Route exact path='/' component={Home} />
           <Route exact path='/signin' component={SignIn} />
-          <Route path='/dashboard' component={authGuard(Dashboard.Home)} />
+          <Route path='/dashboard/home' component={authGuard(Dashboard.Home)} />
+          <Route
+            path='/dashboard/send-notice'
+            component={authGuard(Dashboard.SendNotice)}
+          />
+          <Route
+            path='/dashboard/settings'
+            component={authGuard(Dashboard.Settings)}
+          />
         </App>
       </BrowserRouter>
     </Provider>

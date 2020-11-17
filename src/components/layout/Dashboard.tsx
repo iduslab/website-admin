@@ -1,4 +1,5 @@
 import React, { Children, FC, useState } from 'react'
+import { useHistory, useLocation } from 'react-router-dom'
 import {
   Container,
   Content,
@@ -10,15 +11,22 @@ import {
   Sidebar,
   Sidenav
 } from 'rsuite'
+import { useAuth } from '../../hooks/auth'
 // import { Home } from '../pages/dashboard'
 import './styles.css'
 
 const NavToggle = ({ expand, onChange }: any) => {
+  const auth = useAuth()
+
+  const handleSignout = () => {
+    auth.SignOut()
+  }
+
   return (
     <div style={{ position: 'absolute', bottom: 0, width: '100%' }}>
       <Navbar appearance='subtle' className='nav-toggle'>
         <Navbar.Body>
-          <Nav>
+          <Nav onSelect={handleSignout}>
             <Nav.Item>
               <Icon icon='sign-out' />
             </Nav.Item>
@@ -38,9 +46,17 @@ const NavToggle = ({ expand, onChange }: any) => {
 }
 
 export const DashboardLayout: FC = ({ children }) => {
+  const history = useHistory()
+  const location = useLocation()
+
   const [expand, setExpand] = useState<boolean>(true)
 
   const handleToggle = () => setExpand(!expand)
+
+  const handleOnSelect = (page: string, b: any) => {
+    console.log(b)
+    history.push(`/dashboard/${page}`)
+  }
 
   return (
     <Container style={{ height: '100vh' }}>
@@ -70,39 +86,23 @@ export const DashboardLayout: FC = ({ children }) => {
             )}
           </div>
         </Sidenav.Header>
-        <Sidenav expanded={expand} defaultOpenKeys={['3']} appearance='subtle'>
+        <Sidenav
+          expanded={expand}
+          defaultOpenKeys={['3']}
+          appearance='subtle'
+          activeKey={location.pathname.replaceAll('/dashboard/', '')}
+          onSelect={handleOnSelect}>
           <Sidenav.Body>
             <Nav>
-              <Nav.Item eventKey='1' active icon={<Icon icon='dashboard' />}>
+              <Nav.Item eventKey='home' active icon={<Icon icon='dashboard' />}>
                 Dashboard
               </Nav.Item>
-              <Nav.Item eventKey='2' icon={<Icon icon='group' />}>
-                User Group
+              <Nav.Item eventKey='send-notice' icon={<Icon icon='bell-o' />}>
+                Send Notive
               </Nav.Item>
-              <Dropdown
-                eventKey='3'
-                trigger='hover'
-                title='Advanced'
-                icon={<Icon icon='magic' />}
-                placement='rightStart'>
-                <Dropdown.Item eventKey='3-1'>Geo</Dropdown.Item>
-                <Dropdown.Item eventKey='3-2'>Devices</Dropdown.Item>
-                <Dropdown.Item eventKey='3-3'>Brand</Dropdown.Item>
-                <Dropdown.Item eventKey='3-4'>Loyalty</Dropdown.Item>
-                <Dropdown.Item eventKey='3-5'>Visit Depth</Dropdown.Item>
-              </Dropdown>
-              <Dropdown
-                eventKey='4'
-                trigger='hover'
-                title='Settings'
-                icon={<Icon icon='gear-circle' />}
-                placement='rightStart'>
-                <Dropdown.Item eventKey='4-1'>Applications</Dropdown.Item>
-                <Dropdown.Item eventKey='4-2'>Websites</Dropdown.Item>
-                <Dropdown.Item eventKey='4-3'>Channels</Dropdown.Item>
-                <Dropdown.Item eventKey='4-4'>Tags</Dropdown.Item>
-                <Dropdown.Item eventKey='4-5'>Versions</Dropdown.Item>
-              </Dropdown>
+              <Nav.Item eventKey='settings' icon={<Icon icon='gear' />}>
+                Settings
+              </Nav.Item>
             </Nav>
           </Sidenav.Body>
         </Sidenav>
@@ -111,7 +111,11 @@ export const DashboardLayout: FC = ({ children }) => {
 
       <Container style={{ padding: 30 }}>
         <Header>
-          <h3>Page Title</h3>
+          <h3 style={{ textTransform: 'capitalize' }}>
+            {location.pathname
+              .replaceAll('/dashboard/', '')
+              .replaceAll('-', ' ')}
+          </h3>
         </Header>
         <Content style={{ marginTop: 20 }}>{children}</Content>
       </Container>

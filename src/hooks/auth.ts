@@ -15,7 +15,7 @@ export const useAuth = () => {
   }
 
   const SignOut = () => {
-    dispatch(actions.signoutAction.call)
+    dispatch(actions.signoutAction)
   }
 
   return { authState, exchangeCode, signIn, SignOut }

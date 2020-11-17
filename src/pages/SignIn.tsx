@@ -28,7 +28,7 @@ const SignIn: FC = () => {
   }, [])
 
   useEffect(() => {
-    if (auth.authState.isAuth) history.push('/dashboard')
+    if (auth.authState.isAuth) history.push('/dashboard/home')
   }, [auth.authState.isAuth])
 
   return (
