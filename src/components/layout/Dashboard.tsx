@@ -12,8 +12,6 @@ import {
   Sidenav
 } from 'rsuite'
 import { useAuth } from '../../hooks/auth'
-// import { Home } from '../pages/dashboard'
-import './styles.css'
 
 const NavToggle = ({ expand, onChange }: any) => {
   const auth = useAuth()
@@ -53,8 +51,7 @@ export const DashboardLayout: FC = ({ children }) => {
 
   const handleToggle = () => setExpand(!expand)
 
-  const handleOnSelect = (page: string, b: any) => {
-    console.log(b)
+  const handleOnSelect = (page: string) => {
     history.push(`/dashboard/${page}`)
   }
 
