@@ -64,7 +64,6 @@ function* Signin({ payload }: ReturnType<typeof signinAction.request>) {
   }
 }
 function* SignOut() {
-  console.log('called')
   localStorage.removeItem('access_token')
   localStorage.removeItem('refresh_token')
 }
