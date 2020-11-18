@@ -12,7 +12,10 @@ function* GetSettings(): any {
     yield put({
       type: SETTINGS_SUCCESS,
       payload: {
-        data: res.data.data
+        data: res.data.data.map((data: any, index: any) => ({
+          ...data,
+          id: index + 1
+        }))
       }
     })
   } catch (e) {

@@ -9,6 +9,7 @@ const App: FC = ({ children }) => {
   const location = useLocation()
 
   useEffect(() => {
+    if (location.pathname === '/signin') return
     const access = localStorage.getItem('access_token')
     const refresh = localStorage.getItem('refresh_token')
     if (access && refresh) {
