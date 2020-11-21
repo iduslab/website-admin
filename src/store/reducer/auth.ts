@@ -6,7 +6,8 @@ import {
   Actions,
   signinAction,
   signinCodeAction,
-  signoutAction
+  signoutAction,
+  stopLoading
 } from '../action/auth'
 
 type State = {
@@ -66,7 +67,11 @@ export const AuthReducers = createReducer<State, Actions>(InitialState)
     refreshToken: payload.refreshToken,
     loading: true
   }))
-  .handleAction(signoutAction, (state, action) => ({
+  .handleAction(signoutAction, (_state, _action) => ({
     ...InitialState,
+    loading: false
+  }))
+  .handleAction(stopLoading, (state, _action) => ({
+    ...state,
     loading: false
   }))

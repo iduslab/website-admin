@@ -12,9 +12,8 @@ const App: FC = ({ children }) => {
     if (location.pathname === '/signin') return
     const access = localStorage.getItem('access_token')
     const refresh = localStorage.getItem('refresh_token')
-    if (access && refresh) {
-      auth.signIn(access, refresh)
-    }
+    if (access && refresh) auth.signIn(access, refresh)
+    else auth.stopLoading()
   }, [])
 
   if (auth.authState.loading) {

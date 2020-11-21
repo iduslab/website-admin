@@ -15,8 +15,12 @@ export const useAuth = () => {
   }
 
   const SignOut = () => {
-    dispatch(actions.signoutAction)
+    dispatch(actions.signoutAction(''))
   }
 
-  return { authState, exchangeCode, signIn, SignOut }
+  const stopLoading = () => {
+    dispatch(actions.stopLoading(''))
+  }
+
+  return { authState, exchangeCode, signIn, SignOut, stopLoading }
 }

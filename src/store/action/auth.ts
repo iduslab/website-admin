@@ -1,5 +1,11 @@
 import { createAsyncAction, ActionType, createAction } from 'typesafe-actions'
 
+export const STOP_LOADING = 'auth/stoploading'
+
+export interface IStopLoading {}
+
+export const stopLoading = createAction(STOP_LOADING)<IStopLoading>()
+
 export const SIGNINCODE_REQUEST = 'auth/signincode/request'
 export const SIGNINCODE_SUCCESS = 'auth/signincode/success'
 export const SIGNINCODE_FAILED = 'auth/signincode/failed'
@@ -53,7 +59,8 @@ export const signoutAction = createAction(SIGNOUT)<ISignout>()
 export const actions = {
   signinCodeAction,
   signinAction,
-  signoutAction
+  signoutAction,
+  stopLoading
 }
 
 export type Actions = ActionType<typeof actions>
