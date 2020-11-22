@@ -16,7 +16,7 @@ const App: FC = ({ children }) => {
     else auth.stopLoading()
   }, [])
 
-  if (auth.authState.loading) {
+  if (auth.authState.loading && location.pathname !== '/signin') {
     return <Loading />
   }
 

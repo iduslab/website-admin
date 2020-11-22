@@ -10,9 +10,7 @@ const SignIn: FC = () => {
   const location = useLocation()
   const auth = useAuth()
 
-  const signIn = async (code: string) => {
-    await auth.exchangeCode(code)
-  }
+  const signIn = async (code: string) => auth.exchangeCode(code)
 
   useEffect(() => {
     const { code } = queryString.parse(location.search)
@@ -22,9 +20,7 @@ const SignIn: FC = () => {
         title: 'ERROR',
         description: '올바른 요청이 아닙니다'
       })
-    } else {
-      signIn(Array.isArray(code) ? code[0] : code)
-    }
+    } else signIn(Array.isArray(code) ? code[0] : code)
   }, [])
 
   useEffect(() => {
