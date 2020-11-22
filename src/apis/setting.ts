@@ -16,9 +16,9 @@ export const GetSettingDetail = (name: string): Promise<AxiosResponse> =>
 export const UpdateSetting = (
   accessToken: string,
   name: string,
-  data: any
+  value: any
 ): Promise<AxiosResponse> =>
-  ReqAuth(accessToken).patch(`/setting/${name}`, { value: { data } })
+  ReqAuth(accessToken).patch(`/setting/${name}`, { value })
 
 export const AddSetting = (
   accessToken: string,
